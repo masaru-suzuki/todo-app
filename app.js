@@ -22,7 +22,7 @@ class UI {
         isbn: '45545'
       }
     ];
-    const Books = StoredBooks;
+    const books = StoredBooks;
 
     books.forEach((book) => UI.addBookToList(book));
   }
@@ -47,7 +47,7 @@ class UI {
 // Store Class: Handles Storage
 
 // Event :Display Books
-document.addEventListener('DomContentLoaded')
+document.addEventListener('DomContentLoaded', UI.displayBooks);
 
 // Event :Add a Book
 
