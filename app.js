@@ -7,7 +7,7 @@ class Book {
   }
 }
 
-// UI Class: Handlr UI Tasks
+// UI Class: Handle UI Tasks
 class UI {
   static displayBooks(){
     const StoredBooks = [
@@ -47,8 +47,11 @@ class UI {
 // Store Class: Handles Storage
 
 // Event :Display Books
-document.addEventListener('DomContentLoaded', UI.displayBooks);
+document.addEventListener('DOMContentLoaded', UI.displayBooks);
 
 // Event :Add a Book
+document.querySelector('#book-form ').addEventListener('submit',(e) =>{
+
+});
 
 // Event : Remove a Book
