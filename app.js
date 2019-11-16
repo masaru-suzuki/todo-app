@@ -1,11 +1,17 @@
-
-
-
+'use strict'
+{
 //DatePicker
-<script type="text/javascript">
 $(function () {
     $('#datetimepicker4').datetimepicker({
         format: 'L'
-    });
+    })
 });
-</script>
+
+
+//dataの受け取り
+
+
+
+
+
+}

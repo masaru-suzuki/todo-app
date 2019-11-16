@@ -31,45 +31,35 @@
   <!-------------- 入力フォーム ------------->
   
   <div class="container container-form">
-      <form class="form-group">
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">todo</label>
-            <div class="col-sm-10">
-              <input class="form-control" type="text">
+    <form name="form" id="js-form">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">todo</label>
+        <div class="col-sm-10">
+          <input name="todo" id="js-todo" class="form-control" type="text">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">daedline</label>
+        <div class="col-sm-4 form-group">
+          <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+            <input name="deadline" id="js-deadline" type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
+            <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
             </div>
           </div>
-          <div class="form-group row">
-            <label class="col-sm-2 col-form-label">daedline</label>
-            <div class="col-sm-4 form-group">
-                <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
-                    <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
-                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label">importance</label>
-            <div class="col-10 mt-2">
-              <form action="">
-                <label><input type="radio" name="radio">高</label>
-                <label><input class="ml-5" type="radio" name="radio">中</label>
-                <label><input class="ml-5" type="radio" name="radio">低</label>
-              </form>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-2 col-form-label">list-type</label>
-            <div class="col-10 mt-2">
-              <form action="">
-                <label><input type="radio" name="radio">仕事</label>
-                <label><input class="ml-5" type="radio" name="radio">プライベート</label>
-              </form>
-            </div>
-          </div>
-          <button class="btn btn-block bg-secondary">Add to List</button>
-        </form>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-2 col-form-label">importance</label>
+        <div class="col-10 mt-2">
+          <label><input type="radio" name="importance">高</label>
+          <label><input type="radio" name="importance"class="ml-5">中</label>
+          <label><input type="radio" name="importance"class="ml-5">低</label>
+        </div>
+      </div>
+      </form>
+    </div>
+    <button type="submit" class="btn btn-block bg-secondary" id="btn">Add to List</button>
   </div>
 
 
