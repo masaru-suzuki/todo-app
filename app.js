@@ -1,24 +1,17 @@
-'use strict'
+"use strict";
 {
+  $(function() {
+    $("#datetimepicker4").datetimepicker({
+      format: "L"
+    });
+  });
 
-//DatePicker
-$(function () {
-    $('#datetimepicker4').datetimepicker({
-        format: 'L'
-    })
-});
+  const form = document.getElementById("js-form");
 
-
-//dataの受け取り
-const addlist = document.querySelector('#btn')
-const todo = document.querySelector('#todo')
-
-
-btn.addEventListener("submit",(e) => {
+  form.addEventListener("submit", e => {
     event.preventDefault();
-    console.log(`入力欄の値: ${todo.value}`)
-});
-
-
-
+    console.log(e.target.todo.value);
+    console.log(e.target.deadline.value);
+    console.log(e.target.importance.value);
+  });
 }
