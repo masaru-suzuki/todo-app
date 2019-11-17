@@ -1,0 +1,12 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/masaru-suzuki/todo-app.git",
+  "author": "Masaru Suzuki",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "prettier": "^1.19.1"
+  }
+}
