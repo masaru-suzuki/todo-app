@@ -1,6 +1,7 @@
 "use strict";
 {
   $(function() {
+<<<<<<< HEAD
     $("#datetimepicker4").datetimepicker({
       format: "L"
     });
@@ -101,3 +102,17 @@ document.querySelector('#js-form').addEventListener('submit',(e) =>{
 // TODOについてのファイルとUI変更のファイル
 // いや、ファイルわけなくていいわ
 // 了解
+=======
+    $('#datetimepicker4').datetimepicker({ format: 'L' })
+  })
+
+  const form = document.getElementById('js-form')
+
+  form.addEventListener('submit', e => {
+    event.preventDefault()
+    console.log(e.target.todo.value)
+    console.log(e.target.deadline.value)
+    console.log(e.target.importance.value)
+  })
+}
+>>>>>>> origin/master
