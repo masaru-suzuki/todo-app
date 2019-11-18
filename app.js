@@ -84,3 +84,20 @@ document.querySelector('#js-form').addEventListener('submit',(e) =>{
   
   UI.addTaskToList(task);
 })
+
+// ファイルを分けよう
+// form submission
+// todo class
+// ui class
+// ちなみにClassの使い方わかってるの?
+// なんとなく・・・
+// 最初はFunctionだけでやったほうがいいよ
+//見様見真似でやってる感はある
+
+// それな
+// てかファイル長くて読みにくいからファイルわけないと無理や
+// fileって？
+//JS files
+// TODOについてのファイルとUI変更のファイル
+// いや、ファイルわけなくていいわ
+// 了解
