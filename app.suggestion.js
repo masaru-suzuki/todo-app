@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 
-const form = document.getElementById("js-form");
+const form = document.getElementById('js-form');
 
-form.addEventListener("submit", e => {
+form.addEventListener('submit', e => {
    event.preventDefault();
    console.log(e.target.todo.value);
    console.log(e.target.deadline.value);

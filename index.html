@@ -25,6 +25,7 @@
       <h1 class="display-4 text-center">
         <i class="fas fa-list text-secondary mr-4"></i>my<span class="text-secondary">Todo</span>list</h1>
     </div>
+  </div>
 </header>
 <main>
 
@@ -52,41 +53,31 @@
       <div class="form-group row">
         <label class="col-2 col-form-label">importance</label>
         <div class="col-10 mt-2">
-          <label><input type="radio" name="importance">高</label>
-          <label><input type="radio" name="importance"class="ml-5">中</label>
-          <label><input type="radio" name="importance"class="ml-5">低</label>
+          <label><input type="radio" name="importance" value="高">高</label>
+          <label><input type="radio" name="importance"class="ml-5" value="中">中</label>
+          <label><input type="radio" name="importance"class="ml-5" value="低">低</label>
         </div>
       </div>
       <button type="submit" class="btn btn-block bg-secondary" id="btn">Add to List</button>
       </form>
-    </div>
-  </div>
-
-
-
-
-
-
 
   <!-------------- タスク一覧 ------------->
-  <div class="container container-task" id='tasks'>
-    <table>
-      <thead>
-        <tr>
-          <th>task</th>
-          <th>deadline</th>
-          <th>importance</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody id="task-list"></tbody>
-    </table>
-  </div>
 
+      <table class="table table-striped mt-5">
+        <thead>
+          <tr>
+            <th>check</th>
+            <th>todo</th>
+            <th>deadline</th>
+            <th>importance</th>
+            <th>Completion date</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody id="task-list"></tbody>
+      </table>
+    </div>
 </main>
-<footer></footer>
-
-
 
   <!-- DatePicker -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
