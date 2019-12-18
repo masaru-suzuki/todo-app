@@ -65,20 +65,26 @@ class UI {
     `;
     list.appendChild(row);
 
-    UI.checkAction();
+    const newCheckbox = row.querySelector('input')
+
+    newCheckbox.addEventListener('change', ({ target: { checked } }) => {
+      row.style.backgroundColor = checked ? 'pink' : 'white'
+    })
+
   }
-  static checkAction() {
-    const checkboxes = document.getElementsByName('checkbox');
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('click', () => {
-        if( checkbox.checked) {
-          checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
-        } else {
-          checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
-        }
-      });
-    });
-  }
+  
+  // static checkAction() {
+  //   const checkboxes = document.getElementsByName('checkbox');
+  //   checkboxes.forEach(checkbox => {
+  //     checkbox.addEventListener('click', () => {
+  //       if( checkbox.checked) {
+  //         checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
+  //       } else {
+  //         checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
+  //       }
+  //     });
+  //   });
+  // }
   //delete a task
   static deleteTask(el) {
     if(el.classList.contains('delete')) {
@@ -152,16 +158,16 @@ importance = radioButton[i].value;
 
 //=================Event Complete Task==========================
   //チェックされたチェックボックスを取得
-  const checkboxes = document.getElementsByName('checkbox');
-  checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('click', () => {
-      if( checkbox.checked) {
-        checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
-      } else {
-        checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
-      }
-    });
-  });
+  // const checkboxes = document.getElementsByName('checkbox');
+  // checkboxes.forEach(checkbox => {
+  //   checkbox.addEventListener('click', () => {
+  //     if( checkbox.checked) {
+  //       checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
+  //     } else {
+  //       checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
+  //     }
+  //   });
+  // });
   // console.log(checkboxes);
 // const checkbox = document.getElementsByClassName('checkbox');
 // document.querySelector('checkbox').onchange = UI.checkAction();
