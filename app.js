@@ -56,7 +56,7 @@ class UI {
     const row = document.createElement('tr');
 
     row.innerHTML =`
-      <td><input type = "checkbox" class = "checkbox" name = 'checkbox'/*onchange = "checkAction()"*/></td>
+      <td><input type = "checkbox" class = "checkbox" name = 'checkbox'></td>
       <td>${task.todo}</td>
       <td>${task.deadline}</td>
       <td>${task.importance}</td>
@@ -64,15 +64,19 @@ class UI {
       <td><a href="#" class="btn btn-secondary btn-sm delete">X</a></td>
     `;
     list.appendChild(row);
+
+    UI.checkAction();
   }
   static checkAction() {
     const checkboxes = document.getElementsByName('checkbox');
-    checkboxes.forEach((checkbox) => {
-      if( checkbox.checked) {
-        checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
-      } else {
-        checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
-      }
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('click', () => {
+        if( checkbox.checked) {
+          checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
+        } else {
+          checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
+        }
+      });
     });
   }
   //delete a task
@@ -142,12 +146,12 @@ importance = radioButton[i].value;
     UI.showAlert('Task Added','success');
     //Clear Fields
     UI.clearFields();
+    console.log(checkboxes);
   }
 });
 
 //=================Event Complete Task==========================
   //チェックされたチェックボックスを取得
-
   const checkboxes = document.getElementsByName('checkbox');
   checkboxes.forEach(checkbox => {
     checkbox.addEventListener('click', () => {
@@ -158,7 +162,7 @@ importance = radioButton[i].value;
       }
     });
   });
-  console.log(checkboxes);
+  // console.log(checkboxes);
 // const checkbox = document.getElementsByClassName('checkbox');
 // document.querySelector('checkbox').onchange = UI.checkAction();
 // console.log(checkbox);
