@@ -1,15 +1,15 @@
+/* eslint-disable no-undef */
+'use strict';
+{
 /*
 機能
 ・タスクの追加 => OK
 ・タスクの一覧表示 => OK
-・完了したタスクの一括削除
-・チェックボックスにチェック入れると取り消し線がかかる+色がグレーになる
-・タスク完了時に完了日を横に表示
+・完了したタスクの一括削除 => 今日ここ
+・チェックボックスにチェック入れると取り消し線がかかる+色がグレーになる => OK
+・タスク完了時に完了日を横に表示  => 今日ここ
 ・タスクの編集機能
 ・タスクの並び替え（作成時間とタイトルで、昇降順） */
-
-'use strict';
-{
 //datepicker
   $(function() {
     $('#datetimepicker4').datetimepicker({
@@ -24,6 +24,7 @@ class Task {
     this.todo = todo;
     this.deadline = deadline;
     this.importance = importance;
+    this.isAlert;
   }
 }
 
@@ -32,13 +33,13 @@ class UI {
   static displayTasks(){
     const StoredTasks = [
       {
-        todo: 'clean floor',
-        deadline: 'tommorow',
+        todo: '定期報告アンケートの提出',
+        deadline: '12/10/2019',
         importance: '高'
       },
       {
-        todo: 'wash car',
-        deadline: 'tommorow',
+        todo: 'スタットレスタイヤへの履き替え',
+        deadline: '12/28/2019',
         importance: '中'
       }
     ];
@@ -55,17 +56,31 @@ class UI {
     const row = document.createElement('tr');
 
     row.innerHTML =`
+      <td><input type = "checkbox" class = "checkbox" name = 'checkbox'/*onchange = "checkAction()"*/></td>
       <td>${task.todo}</td>
       <td>${task.deadline}</td>
       <td>${task.importance}</td>
-      <td><a href="#" class="btn btn-danger btn-sm delete">X</a></td>
+      <td></td>
+      <td><a href="#" class="btn btn-secondary btn-sm delete">X</a></td>
     `;
     list.appendChild(row);
+  }
+  static checkAction() {
+    const checkboxes = document.getElementsByName('checkbox');
+    checkboxes.forEach((checkbox) => {
+      if( checkbox.checked) {
+        checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
+      } else {
+        checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
+      }
+    });
   }
   //delete a task
   static deleteTask(el) {
     if(el.classList.contains('delete')) {
       el.parentElement.parentElement.remove();
+      //Show success message
+      UI.showAlert('Task is removed','success');
     }
   }
   //clear Fields
@@ -79,22 +94,27 @@ class UI {
   }
   //show alert
   static showAlert(message, className) {
+    if(this.isAlert === true) return;
+    this.isAlert = true;
     const div = document.createElement('div');
     div.className = `alert alert-${className}`;
     div.appendChild(document.createTextNode(message));
     const btn = document.querySelector('.btn');
     const form =document.querySelector('#js-form');
     form.insertBefore(div, btn);
+    setTimeout(() => {
+      div.remove();
+      this.isAlert = false;
+    }, 2000);
   }
 }
 
 // Store Class : Handles Storage
 
-// Event :Display Tasks
-
+// =======================Event :Display Tasks==============================
 document.addEventListener('DOMContentLoaded',UI.displayTasks);
 
-// Event : Add a Task
+// =======================Event : Add a Task============================
 document.querySelector('#js-form').addEventListener('submit',(e) =>{
   //prevent actual submit
   e.preventDefault();
@@ -108,27 +128,51 @@ document.querySelector('#js-form').addEventListener('submit',(e) =>{
 importance = radioButton[i].value;
     }
   }
-console.log(importance);
-//Validate
-//Instatiate task
-  const task = new Task(todo, deadline, importance);
-  console.log(task);
-//Add Task to UI
-UI.addTaskToList(task);
-
-//Add Task to Localstorage
-
-//Show success message
-UI.showAlert('Task Added','success');
-//Clear Fields
-UI.clearFields();
+  //Validate
+  if(todo === ''|| deadline === ''|| radioButton === '') {
+    UI.showAlert('fill in all blank', 'danger');
+  } else {
+    //Instantiate task
+      const task = new Task(todo, deadline, importance);
+      console.log(task);
+    //Add Task to UI
+    UI.addTaskToList(task);
+    //Add Task to Localstorage
+    //Show success message
+    UI.showAlert('Task Added','success');
+    //Clear Fields
+    UI.clearFields();
+  }
 });
+
+//=================Event Complete Task==========================
+  //チェックされたチェックボックスを取得
+
+  const checkboxes = document.getElementsByName('checkbox');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', () => {
+      if( checkbox.checked) {
+        checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
+      } else {
+        checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
+      }
+    });
+  });
+  console.log(checkboxes);
+// const checkbox = document.getElementsByClassName('checkbox');
+// document.querySelector('checkbox').onchange = UI.checkAction();
+// console.log(checkbox);
+
+
+//===============Event Remove Completed Task===========================
+  //チェックボックスに１つ以上チェックを入れた場合、all clearボタンをenableにする
+  //チェックを入れたチェックボックス全体のデータを取得
+  //チェックを入れたチェックボックス全体のデータについて、Remove a Taskと同じ動作を命令する
 
 //Event Remove a Task
 document.querySelector('table').addEventListener('click',(e) => {
   //remove task from UI
   UI.deleteTask(e.target);
   //remove task from Localstorage
-  //Show success message
 });
 }

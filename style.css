@@ -1,0 +1,6 @@
+.checked {
+  text-decoration: solid;
+  text-decoration-color: #fff;
+  text-decoration-line: line-through;
+  background-color: gray;
+}

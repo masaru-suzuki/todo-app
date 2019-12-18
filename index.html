@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="https://kit.fontawesome.com/d6cefdfcb9.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
   <!-- DatePicker -->
 
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
@@ -13,10 +14,6 @@
   <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
   <title>todo app</title>
-
-  <style>
-  
-  </style>
 </head>
 <body>
 <header>
@@ -30,7 +27,7 @@
 <main>
 
   <!-------------- 入力フォーム ------------->
-  
+
   <div class="container container-form mt-5">
     <form name="form" id="js-form">
       <div class="form-group row">
@@ -63,7 +60,7 @@
 
   <!-------------- タスク一覧 ------------->
 
-      <table class="table table-striped mt-5">
+      <table class="table mt-5">
         <thead>
           <tr>
             <th>check</th>
@@ -76,6 +73,7 @@
           </thead>
           <tbody id="task-list"></tbody>
       </table>
+      <button id="clear-btn" class="clear-btn btn bg-secondary btn-sm">all clear complete task</button>
     </div>
 </main>
 
@@ -85,5 +83,20 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <script src="app.js"></script>
+<!-- <script>
+function checkAction() {
+    const checkboxes = document.getElementsByName('checkbox');
+    checkboxes.forEach((checkbox) => {
+      //チェックされたチェックボックスのcompletion dateに完了びを記述
+      const completionDate = Date.now();
+      //チェックされたチェックボックスのrowについて、styleの変更 =>行全体をグレーにする + 行全体に取り消し線をひく
+      if( checkbox.checked) {
+        checkbox.parentElement.parentElement.classList.add('checked');
+      } else {
+        checkbox.parentElement.parentElement.classList.remove('checked');
+      }
+    });
+  }
+</script> -->
 </body>
 </html>
