@@ -50,48 +50,42 @@ class UI {
 
   }
   //Add task to list
-  static addTaskToList(task){
-    const list = document.querySelector('#task-list');
+  static addTaskToList(task) {
+    const list = document.querySelector('#task-list')
+    const row = document.createElement('tr')
 
-    const row = document.createElement('tr');
+    const id = list.childElementCount
+    row.id = `todo-${id}`
 
-    row.innerHTML =`
-      <td><input type = "checkbox" class = "checkbox" name = 'checkbox'></td>
-      <td>${task.todo}</td>
-      <td>${task.deadline}</td>
-      <td>${task.importance}</td>
-      <td></td>
-      <td><a href="#" class="btn btn-secondary btn-sm delete">X</a></td>
-    `;
-    list.appendChild(row);
+    row.innerHTML = `
+    <td><input type = "checkbox" class = "checkbox" name = 'checkbox'></td>
+    <td>${task.todo}</td>
+    <td>${task.deadline}</td>
+    <td>${task.importance}</td>
+    <td></td>
+    <td><a href="#" class="btn btn-secondary btn-sm delete" data-id=${id}>X</a></td>
+    `
 
+    // Adding id as custom data attribute makes it much easier to traverse the parent element when toggling the checkbox.
+
+    list.appendChild(row)
+
+    // Following functionalities should be extracted into a different method.
     const newCheckbox = row.querySelector('input')
 
     newCheckbox.addEventListener('change', ({ target: { checked } }) => {
       row.style.backgroundColor = checked ? 'pink' : 'white'
     })
 
+    row.querySelector('.delete').addEventListener('click', UI.deleteTask)
   }
-  
-  // static checkAction() {
-  //   const checkboxes = document.getElementsByName('checkbox');
-  //   checkboxes.forEach(checkbox => {
-  //     checkbox.addEventListener('click', () => {
-  //       if( checkbox.checked) {
-  //         checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
-  //       } else {
-  //         checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
-  //       }
-  //     });
-  //   });
-  // }
-  //delete a task
+
   static deleteTask(el) {
-    if(el.classList.contains('delete')) {
-      el.parentElement.parentElement.remove();
-      //Show success message
-      UI.showAlert('Task is removed','success');
-    }
+    // traverse target element (tr) by custom data attribute on the delete button
+    const target = document.getElementById(`todo-${el.target.dataset.id}`)
+    target.querySelector('input').removeEventListener('change', UI.deleteTask)
+    target.remove()
+    UI.showAlert('Task is removed', 'success')
   }
   //clear Fields
   static clearFields() {
@@ -180,9 +174,9 @@ importance = radioButton[i].value;
   //チェックを入れたチェックボックス全体のデータについて、Remove a Taskと同じ動作を命令する
 
 //Event Remove a Task
-document.querySelector('table').addEventListener('click',(e) => {
-  //remove task from UI
-  UI.deleteTask(e.target);
-  //remove task from Localstorage
-});
+// document.querySelector('table').addEventListener('click',(e) => {
+//   //remove task from UI
+//   UI.deleteTask(e.target);
+//   //remove task from Localstorage
+// });
 }
