@@ -10,6 +10,8 @@
 ・タスク完了時に完了日を横に表示  => 今日ここ
 ・タスクの編集機能
 ・タスクの並び替え（作成時間とタイトルで、昇降順） */
+
+
 //datepicker
   $(function() {
     $('#datetimepicker4').datetimepicker({
@@ -65,26 +67,20 @@ class UI {
     `;
     list.appendChild(row);
 
-    const newCheckbox = row.querySelector('input')
+    const newCheckbox = row.querySelector('input');
+    //rowの５番目を定義
+    const completedDate = row.querySelector(fifth.appendChild);
 
     newCheckbox.addEventListener('change', ({ target: { checked } }) => {
-      row.style.backgroundColor = checked ? 'pink' : 'white'
-    })
+      row.style.backgroundColor = checked ? 'gray' : 'white';
+      //チェック入れた時にdate.nowを取得
+      //dateを日付に変更
+      //completedDateに書き込む
+    });
+    
 
   }
-  
-  // static checkAction() {
-  //   const checkboxes = document.getElementsByName('checkbox');
-  //   checkboxes.forEach(checkbox => {
-  //     checkbox.addEventListener('click', () => {
-  //       if( checkbox.checked) {
-  //         checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
-  //       } else {
-  //         checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
-  //       }
-  //     });
-  //   });
-  // }
+
   //delete a task
   static deleteTask(el) {
     if(el.classList.contains('delete')) {
@@ -157,27 +153,12 @@ importance = radioButton[i].value;
 });
 
 //=================Event Complete Task==========================
-  //チェックされたチェックボックスを取得
-  // const checkboxes = document.getElementsByName('checkbox');
-  // checkboxes.forEach(checkbox => {
-  //   checkbox.addEventListener('click', () => {
-  //     if( checkbox.checked) {
-  //       checkbox.parentElement.parentElement.style.backgroundColor = 'gray';
-  //     } else {
-  //       checkbox.parentElement.parentElement.style.backgroundColor = '#fff';
-  //     }
-  //   });
-  // });
-  // console.log(checkboxes);
-// const checkbox = document.getElementsByClassName('checkbox');
-// document.querySelector('checkbox').onchange = UI.checkAction();
-// console.log(checkbox);
+//チェックボックスに１つ以上チェックを入れた場合、all clearボタンをenableにする
+//チェックを入れたチェックボックス全体のデータを取得
+//チェックを入れたチェックボックス全体のデータについて、Remove a Taskと同じ動作を命令する
 
 
 //===============Event Remove Completed Task===========================
-  //チェックボックスに１つ以上チェックを入れた場合、all clearボタンをenableにする
-  //チェックを入れたチェックボックス全体のデータを取得
-  //チェックを入れたチェックボックス全体のデータについて、Remove a Taskと同じ動作を命令する
 
 //Event Remove a Task
 document.querySelector('table').addEventListener('click',(e) => {
