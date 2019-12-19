@@ -84,6 +84,7 @@
 
     static deleteTask(el) {
       // traverse target element (tr) by custom data attribute on the delete button
+      //この書き方もう少し勉強する
       const target = document.getElementById(`todo-${el.target.dataset.id}`)
       target.querySelector('input').removeEventListener('change', UI.deleteTask)
       target.remove()
@@ -148,7 +149,6 @@
       UI.showAlert('Task Added', 'success')
       //Clear Fields
       UI.clearFields()
-      console.log(checkboxes)
     }
   })
 
@@ -160,9 +160,9 @@
   //===============Event Remove Completed Task===========================
 
   //Event Remove a Task
-  // document.querySelector('table').addEventListener('click',(e) => {
-  //   //remove task from UI
-  //   UI.deleteTask(e.target);
-  //   //remove task from Localstorage
-  // });
+  document.querySelector('table').addEventListener('click',(e) => {
+    //remove task from UI
+    UI.deleteTask(e.target);
+    //remove task from Localstorage
+  });
 }
