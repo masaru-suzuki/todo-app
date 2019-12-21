@@ -111,12 +111,15 @@
       return object.key;
     }
     //stored taskはオブジェクトで、UI.addTaskToList(task)をするにはオブジェクトで取得しなければならない
-    const displayedObject = 
-    //function compare()で配列内のdeadlineを比較して並べ替えるためにcompareを定義
+    const StoredTodoList = Store.getTodoList();
+    const todoList = StoredTodoList;
+    console.log(todoList);
+    console.log(todoList[0].deadline);
+    // function compare()で配列内のdeadlineを比較して並べ替えるためにcompareを定義
       function compare(a,b) {
-        const deadlineA = extractDeadlineFromObject(a);
+        const deadlineA = a.deadline;
         console.log(deadlineA);
-        const deadlineB = extractDeadlineFromObject(b);
+        const deadlineB = b.deadline;
         console.log(deadlineB);
         if(deadlineA > deadlineB) {
           return 1;
@@ -127,9 +130,9 @@
         }
       };
       //objectをソート
-      displayedObject.sort(compare);
-      console.log(displayedObject);
-      displayedObject.forEach(object => UI.addTaskToList(object));
+      todoList.sort(compare);
+      console.log(todoList);
+      todoList.forEach(object => UI.addTaskToList(object));
 
     //compareFunctionを定義 重要度については高 = 1 のように数値化してみる
     }
