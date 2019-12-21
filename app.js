@@ -60,7 +60,6 @@
     static displayTasks() {
       const StoredTasks = Store.getTodoList();
       const tasks = StoredTasks;
-      console.log(StoredTasks);
       tasks.forEach(task => UI.addTaskToList(task));
     }
     //Add task to list
@@ -102,25 +101,13 @@
 
     //sort Tasks
     static sortTask() {
-    //sortする要素を配列で取得する    arr.sort([compareFunction])
-    // const sortTaskList = Array.prototype.slice.call(document.querySelectorAll('.deadline'), 0);
-    // console.log(sortTaskList);
-    //オブジェクトの中のdeadlineを抽出できるのか？配列じゃなくてオブジェクトで取得したい。表示されている表からオブジェクトを取得する
-    //オブジェクトからdeadlineを抽出するfunctionを定義
-    function extractDeadlineFromObject(object) {
-      return object.key;
-    }
-    //stored taskはオブジェクトで、UI.addTaskToList(task)をするにはオブジェクトで取得しなければならない
     const StoredTodoList = Store.getTodoList();
     const todoList = StoredTodoList;
-    console.log(todoList);
-    console.log(todoList[0].deadline);
-    // function compare()で配列内のdeadlineを比較して並べ替えるためにcompareを定義
+      console.log(todoList);
+      //sort function
       function compare(a,b) {
         const deadlineA = a.deadline;
-        console.log(deadlineA);
         const deadlineB = b.deadline;
-        console.log(deadlineB);
         if(deadlineA > deadlineB) {
           return 1;
         } else if(deadlineA < deadlineB) {
@@ -128,11 +115,16 @@
         } else {
           return 0;
         }
-      };
+      }
+
       //objectをソート
       todoList.sort(compare);
       console.log(todoList);
-      todoList.forEach(object => UI.addTaskToList(object));
+      //元々表示されていた表を削除
+      // document.querySelector('.delete').parentElement.parentElement.parentElement.remove();
+      // console.log(todoList);
+      //ソートしたオブジェクトを表示
+      todoList.forEach(task => UI.addTaskToList(task));
 
     //compareFunctionを定義 重要度については高 = 1 のように数値化してみる
     }
