@@ -194,12 +194,12 @@
     //remove task from Localstorage
   });
 
-  document.getElementById('descending-sort-button').addEventListener('click', () => {
+  document.getElementById('sort-deadline').addEventListener('click', () => {
     UI.sortTasks('DESC')
     UI.updateTaskList()
   })
 
-  document.getElementById('ascending-sort-button').addEventListener('click', () => {
+  document.getElementById('sort-importance').addEventListener('click', () => {
     UI.sortTasks('ASC')
     UI.updateTaskList()
   })

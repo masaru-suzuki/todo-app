@@ -28,29 +28,37 @@
       this.isAlert;
     }
   }
-
+  class Store{
+    static getTodoList() {
+      let todoList;
+      if(localStorage.getItem('todoList') === null) {
+        todoList = [];
+      } else {
+        todoList = JSON.parse(localStorage.getItem('todoList'));
+      }
+      return todoList;
+    }
+    static addTask(task) {
+      const todoList = Store.getTodoList();
+      todoList.push(task);
+      localStorage.setItem('todoList', JSON.stringify(todoList));
+    }
+    static removeTask(todo) {
+      const todoList = Store.getTodoList();
+      todoList.forEach((task, index) => {
+        if(task.todo === todo) {
+          console.log(task.todo+'===delete task');
+          todoList.splice(index, 1);
+        }
+      });
+      localStorage.setItem('todoList',JSON.stringify(todoList));
+    }
+  }
   // UI Class : Handle UI Tasks
   class UI {
     //display tasks
     static displayTasks() {
-      const StoredTasks = [
-        {
-          todo: '定期報告アンケートの提出',
-          deadline: '12/10/2019',
-          importance: '高',
-        },
-        {
-          todo: '窓ガラス掃除',
-          deadline: '10/10/2019',
-          importance: '低',
-        },
-        {
-          todo: 'スタットレスタイヤへの履き替え',
-          deadline: '12/28/2019',
-          importance: '中',
-        },
-      ];
-
+      const StoredTasks = Store.getTodoList();
       const tasks = StoredTasks;
       console.log(StoredTasks);
       tasks.forEach(task => UI.addTaskToList(task));
@@ -86,7 +94,10 @@
         //dateをyear/month/dayに変更＋spaceToWriteDateに書き込む
         spaceToWriteDate.textContent = CompleteDate.toLocaleDateString();
       });
-      row.querySelector('.delete').addEventListener('click', UI.deleteTask);
+      row.querySelector('.delete').addEventListener('click', (el) => {
+        UI.deleteTask(el);
+        Store.removeTask(row.querySelector('.delete').parentElement.parentElement.children[1].textContent);
+      });
     }
 
     //sort Tasks
@@ -114,7 +125,7 @@
         } else {
           return 0;
         }
-      }
+      };
       //objectをソート
       displayedObject.sort(compare);
       console.log(displayedObject);
@@ -189,6 +200,7 @@
       //Add Task to UI
       UI.addTaskToList(task);
       //Add Task to Localstorage
+      Store.addTask(task);
       //Show success message
       UI.showAlert('Task Added', 'success');
       //Clear Fields
@@ -208,9 +220,9 @@
     checkboxes.forEach(checkbox => {
       if(checkbox.checked) {
         checkbox.parentElement.parentElement.remove();
+        Store.removeTask(checkbox.parentElement.parentElement.children[1].textContent);
       }
     });
-    //Localstorageから削除
   });
 
 //======================Event Sort Task=================================
