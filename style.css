@@ -4,3 +4,23 @@
   text-decoration-line: line-through;
   background-color: gray;
 }
+/* tr {
+  display: table;
+  width: 100%;
+}
+th {
+  width: 20%;
+  display: table-cell;
+} */
+.deadline {
+  width: 20%;
+}
+.importance {
+  width: 22%;
+}
+.fas {
+  margin-left: 3px;
+}
+#sort-importance,#sort-deadline {
+  cursor: pointer;
+}

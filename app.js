@@ -31,12 +31,18 @@
 
   // UI Class : Handle UI Tasks
   class UI {
+    //display tasks
     static displayTasks() {
       const StoredTasks = [
         {
           todo: '定期報告アンケートの提出',
           deadline: '12/10/2019',
           importance: '高',
+        },
+        {
+          todo: '窓ガラス掃除',
+          deadline: '10/10/2019',
+          importance: '低',
         },
         {
           todo: 'スタットレスタイヤへの履き替え',
@@ -46,7 +52,7 @@
       ];
 
       const tasks = StoredTasks;
-
+      console.log(StoredTasks);
       tasks.forEach(task => UI.addTaskToList(task));
     }
     //Add task to list
@@ -57,12 +63,11 @@
       // Adding id as custom data attribute makes it much easier to traverse the parent element when toggling the checkbox.
       const id = list.childElementCount;
       row.id = `todo-${id}`;
-
       row.innerHTML = `
     <td><input type = "checkbox" class = "checkbox" name = 'checkbox'></td>
     <td>${task.todo}</td>
-    <td>${task.deadline}</td>
-    <td>${task.importance}</td>
+    <td class="deadline">${task.deadline}</td>
+    <td class="importance">${task.importance}</td>
     <td></td>
     <td><a href="#" class="btn btn-secondary btn-sm delete" data-id=${id}>X</a></td>
     `;
@@ -70,20 +75,55 @@
       list.appendChild(row);
 
       //TODO: Following functionalities should be extracted into a different method(s).
-      //static CheckAcrionでまとめたい
+      //static CheckActionでまとめたい
       const newCheckbox = row.querySelector('input');
       newCheckbox.addEventListener('change', ({ target: { checked } }) => {
         row.style.backgroundColor = checked ? 'gray' : 'white';
-        //チェック入れた時にdate.nowを取得
+      // Display complete Date
         const spaceToWriteDate = row.children[4];
-        //dateを日付に変更
+        //チェック入れた時にdate.nowを取得
         const CompleteDate = new Date();
-        //spaceToWriteDateに書き込む
+        //dateをyear/month/dayに変更＋spaceToWriteDateに書き込む
         spaceToWriteDate.textContent = CompleteDate.toLocaleDateString();
       });
       row.querySelector('.delete').addEventListener('click', UI.deleteTask);
     }
 
+    //sort Tasks
+    static sortTask() {
+    //sortする要素を配列で取得する    arr.sort([compareFunction])
+    // const sortTaskList = Array.prototype.slice.call(document.querySelectorAll('.deadline'), 0);
+    // console.log(sortTaskList);
+    //オブジェクトの中のdeadlineを抽出できるのか？配列じゃなくてオブジェクトで取得したい。表示されている表からオブジェクトを取得する
+    //オブジェクトからdeadlineを抽出するfunctionを定義
+    function extractDeadlineFromObject(object) {
+      return object.key;
+    }
+    //stored taskはオブジェクトで、UI.addTaskToList(task)をするにはオブジェクトで取得しなければならない
+    const displayedObject = 
+    //function compare()で配列内のdeadlineを比較して並べ替えるためにcompareを定義
+      function compare(a,b) {
+        const deadlineA = extractDeadlineFromObject(a);
+        console.log(deadlineA);
+        const deadlineB = extractDeadlineFromObject(b);
+        console.log(deadlineB);
+        if(deadlineA > deadlineB) {
+          return 1;
+        } else if(deadlineA < deadlineB) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+      //objectをソート
+      displayedObject.sort(compare);
+      console.log(displayedObject);
+      displayedObject.forEach(object => UI.addTaskToList(object));
+
+    //compareFunctionを定義 重要度については高 = 1 のように数値化してみる
+    }
+
+    //delete task
     static deleteTask(el) {
       // traverse target element (tr) by custom data attribute on the delete button
       //この書き方もう少し勉強する
@@ -92,6 +132,7 @@
       target.remove();
       UI.showAlert('Task is removed', 'success');
     }
+
     //clear Fields
     static clearFields() {
       document.querySelector('#todo').value = '';
@@ -101,6 +142,7 @@
         radioButton[i].checked = false;
       }
     }
+
     //show alert
     static showAlert(message, className) {
       if (this.isAlert === true) return;
@@ -171,10 +213,8 @@
     //Localstorageから削除
   });
 
-//======================Event Remove a Task=================================
-  document.querySelector('table').addEventListener('click',(e) => {
-    //remove task from UI
-    UI.deleteTask(e.target);
-    //remove task from Localstorage
+//======================Event Sort Task=================================
+  document.getElementById('sort-deadline').addEventListener('click', () => {
+    UI.sortTask();
   });
 }
