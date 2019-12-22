@@ -1,8 +1,10 @@
 var _a, _b;
-import { todoList } from './TodoList.js'; // .js is needed for browser
 import { Todo } from './Todo.js';
-import { events } from './events.js';
-import { todoListUI } from './TodoListUI.js';
+import { TodoListUI } from './TodoListUI.js';
+import { TodoList } from './TodoList.js';
+const todoList = new TodoList();
+const deleteTodo = (id) => todoList.deleteTodo(id);
+const todoListUI = new TodoListUI(deleteTodo);
 (_a = document.getElementById('js-form')) === null || _a === void 0 ? void 0 : _a.addEventListener('submit', e => {
     e.preventDefault();
     const target = e.target;
@@ -11,10 +13,10 @@ import { todoListUI } from './TodoListUI.js';
         deadline: target.deadline.value,
         importance: target.importance.value,
     });
-    todoList.dispatchEvent(new CustomEvent(events.todoCreated, { detail: { todo: newTodo } }));
-    todoListUI.dispatchEvent(new CustomEvent(events.todoAdded, { detail: { todo: newTodo } }));
+    todoList.addTodo(newTodo);
+    todoListUI.addTodo(newTodo);
 });
 (_b = document.getElementById('clear-btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', () => {
-    todoList.dispatchEvent(new Event(events.completedTodosDeleted));
-    todoListUI.dispatchEvent(new CustomEvent(events.completedTodosDeleted, { detail: { todos: todoList.items } }));
+    todoList.deleteCompletedTodos();
+    todoListUI.updateTable(todoList.items);
 });

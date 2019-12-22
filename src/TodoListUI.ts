@@ -1,17 +1,14 @@
-import { events } from './events.js'
 import { Todo } from './Todo.js'
-import { todoList, TodoList } from './TodoList.js'
 
-export class TodoListUI extends EventTarget {
+export class TodoListUI {
   elm: HTMLElement
-  todoList: TodoList
+  deleteTodo: (id: Todo['id']) => void
 
-  constructor(todoList: TodoList) {
-    super()
+  constructor(deleteTodo: (id: Todo['id']) => void) {
     const todoListElement = document.getElementById('task-list')
     if (!todoListElement) throw new Error('no todo list element found')
     this.elm = todoListElement
-    this.todoList = todoList
+    this.deleteTodo = deleteTodo
   }
 
   addTodo = (todo: Todo) => {
@@ -22,19 +19,22 @@ export class TodoListUI extends EventTarget {
     this.elm.appendChild(row)
   }
 
-  deleteCompleted = (remainingTodos: Todo) => {}
-
-  private addEventListeners = (row: HTMLTableRowElement, todo: Todo) => {
-    row.querySelector('.checkbox')?.addEventListener('change', () => {
-      todo.toggleComplete()
-      row.querySelector('.completedAt')!.innerHTML = todo.completedAt?.value || '-'
-    })
-
-    row.querySelector('.delete')?.addEventListener('click', () => {
-      this.todoList.dispatchEvent(new CustomEvent(events.todoDeleted, { detail: { id: todo.id } }))
-      row.innerHTML = ''
-    })
+  updateTable = (todos: Todo[]) => {
+    this.elm.innerHTML = ''
+    todos.map(this.addTodo).join(' ')
   }
+
+  private toggleComplete = (row: HTMLElement, todo: Todo) => {
+    todo.toggleComplete()
+    row.querySelector('.completedAt')!.innerHTML = todo.completedAt?.value || '-'
+  }
+
+  private deleteTodoItemFromList = (row: HTMLElement, id: Todo['id']) => {
+    this.deleteTodo(id)
+    row.innerHTML = ''
+  }
+
+  private selectRow = (row: HTMLElement) => (row.style.backgroundColor = 'whitesmoke')
 
   private createRowElm = (todo: Todo) => {
     return `
@@ -46,13 +46,13 @@ export class TodoListUI extends EventTarget {
       <td><a href="#" class="btn btn-secondary btn-sm delete" data-id=${todo.id}>X</a></td>
     `
   }
+
+  private addEventListeners = (row: HTMLTableRowElement, todo: Todo) => {
+    row.querySelector('.checkbox')?.addEventListener('change', () => {
+      this.toggleComplete(row, todo)
+      this.selectRow(row)
+    })
+
+    row.querySelector('.delete')?.addEventListener('click', () => this.deleteTodoItemFromList(row, todo.id))
+  }
 }
-
-export const todoListUI = new TodoListUI(todoList)
-
-todoListUI.addEventListener(events.todoAdded, e => {
-  const event = (e as any) as { detail: { todo: Todo } }
-  todoListUI.addTodo(event.detail.todo)
-})
-
-// todoListUI.addEventListener()

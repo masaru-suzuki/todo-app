@@ -1,7 +1,11 @@
-import { todoList } from './TodoList.js' // .js is needed for browser
 import { Todo } from './Todo.js'
-import { events } from './events.js'
-import { todoListUI } from './TodoListUI.js'
+import { TodoListUI } from './TodoListUI.js'
+import { TodoList } from './TodoList.js'
+
+const todoList = new TodoList()
+const deleteTodo = (id: Todo['id']) => todoList.deleteTodo(id)
+
+const todoListUI = new TodoListUI(deleteTodo)
 
 document.getElementById('js-form')?.addEventListener('submit', e => {
   e.preventDefault()
@@ -14,13 +18,11 @@ document.getElementById('js-form')?.addEventListener('submit', e => {
     importance: target.importance.value,
   })
 
-  todoList.dispatchEvent(new CustomEvent(events.todoCreated, { detail: { todo: newTodo } }))
-
-  todoListUI.dispatchEvent(new CustomEvent(events.todoAdded, { detail: { todo: newTodo } }))
+  todoList.addTodo(newTodo)
+  todoListUI.addTodo(newTodo)
 })
 
 document.getElementById('clear-btn')?.addEventListener('click', () => {
-  todoList.dispatchEvent(new Event(events.completedTodosDeleted))
-
-  todoListUI.dispatchEvent(new CustomEvent(events.completedTodosDeleted, { detail: { todos: todoList.items } }))
+  todoList.deleteCompletedTodos()
+  todoListUI.updateTable(todoList.items)
 })
