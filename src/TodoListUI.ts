@@ -1,10 +1,14 @@
 import { Todo } from './Todo.js'
 
-export class TodoListUI {
-  elm: HTMLElement
+type ConstructorArgs = {
   deleteTodo: (id: Todo['id']) => void
+}
 
-  constructor(deleteTodo: (id: Todo['id']) => void) {
+export class TodoListUI {
+  private elm: HTMLElement
+  private deleteTodo: ConstructorArgs['deleteTodo']
+
+  constructor({ deleteTodo }: ConstructorArgs) {
     const todoListElement = document.getElementById('task-list')
     if (!todoListElement) throw new Error('no todo list element found')
     this.elm = todoListElement
@@ -16,6 +20,7 @@ export class TodoListUI {
     row.innerHTML = this.createRowElm(todo)
 
     this.addEventListeners(row, todo)
+
     this.elm.appendChild(row)
   }
 
@@ -40,7 +45,7 @@ export class TodoListUI {
     return `
       <td><input type="checkbox" class="checkbox"></td>
       <td>${todo.title}</td>
-      <td class="deadline">${todo.deadline || '-'}</td>
+      <td class="deadline">${todo.deadline?.value || '-'}</td>
       <td class="importance">${todo.parseImportance() || '-'}</td>
       <td class="completedAt">${todo.completedAt?.value || '-'}</td>
       <td><a href="#" class="btn btn-secondary btn-sm delete" data-id=${todo.id}>X</a></td>
